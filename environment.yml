@@ -1,0 +1,27 @@
+name: llm-bias
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pytorch=2.3
+  - pytorch-cuda=12.1      
+  - torchvision=0.18
+  - torchaudio=2.3
+  - cudatoolkit               
+  - pandas
+  - numpy
+  - datasets
+  - transformers=4.55
+  - peft=0.11
+  - accelerate
+  - xlsxwriter
+  - scikit-learn
+  - tqdm
+  - pip
+  - pip:
+      - trl==0.21.0
+      - evaluate
+      - sentencepiece
+      - bitsandbytes==0.44.1  

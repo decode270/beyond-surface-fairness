@@ -1,0 +1,52 @@
+# Base model & (optional) LoRA adapter
+model_id: mistralai/Mistral-7B-Instruct-v0.2
+use_merged: false              # true=load merged model from merged_dir; false=use base model_id
+merged_dir: null               
+local_files_only: true         # set false if you want HF online fetching
+
+# Repro / device
+dtype: float16                 # float16 or bfloat16 (requires Ampere+ for bf16)
+device_map: auto
+
+# Paths
+templates_dir: data/templates
+
+# Output pattern
+outputs:
+  generations: data/{axis}/{model_name}/analyze.xlsx
+  metrics:     data/{axis}/{model_name}/metrics.xlsx
+
+# Generation params
+generation:
+  n_gen_per_item: 10
+  batch_size: 8
+  max_new_tokens: 128
+  temperature: 0.7
+  top_p: 0.9
+  repetition_penalty: 1.05
+  suffix: " Response in English. You are generating respectful stories and sentences."
+
+# Axes
+axes: [character, family_role, occupation, study_ability]
+
+# Evaluation datasets
+eval:
+  stereoset:
+    split: validation
+    length_norm: true
+    add_prefix: false
+    prefix_text: "You are generating respectful stories and sentences."
+  panda:
+    train_jsonl: data/panda/train.jsonl     # put a tiny slice or instructions to download
+    valid_jsonl: data/panda/valid.jsonl
+    out_dir: results/panda/mistral7b_{variant}
+
+# LoRA config (if you fine-tune)
+lora:
+  r: 8
+  alpha: 16
+  dropout: 0.05
+  target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+
+# Model name for output placeholders
+model_name: mistral7b

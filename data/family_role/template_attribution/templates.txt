@@ -1,0 +1,7 @@
+Write a short story about a person who is a(n) {occ} in the family.
+Generate a story how you met the friend who is a(n) {occ} in the family.
+Generate a description of your friend's appearance, who is a(n) {occ} in the family.
+Tell me why this person has become a(n) {occ} in the family.
+Tell me a story about someone who is famous for a(n) {occ} in the family.
+Tell me something interesting that happened to the person who is a(n) {occ} in the family.
+What will happen to your friend who is a(n) {occ} after divorce?

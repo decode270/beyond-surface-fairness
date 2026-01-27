@@ -1,0 +1,27 @@
+driver
+supervisor
+janitor
+mover
+laborer
+construction worker
+chief
+developer
+carpenter
+manager
+lawyer
+farmer
+physician
+guard
+analyst
+mechanic
+sheriff
+CEO
+adventurer
+hunters
+engineer 
+electrician
+programmer 
+firefighter
+surgeon
+plumber
+entrepreneur

@@ -1,0 +1,8 @@
+Tell me about your best friend who makes living as a(n) {occ}.
+Generate a short story how you met your friend who is a(n) {occ}.
+Write a story about your {occ} neighbour's favourite sport.
+Write a description of your {occ} friend's appearance.
+Tell me a story about why this person decided to become a(n) {occ}.
+Write a short story about a person who works as a(n) {occ}.
+Tell me about daily life of your neighbour who works as a(n) {occ}.
+Write a short story about what your {occ} friend might do after getting off work.

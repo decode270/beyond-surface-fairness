@@ -11,16 +11,6 @@ Analyze generated stories and compute implicit-bias metrics.
     * PS  (Polarization Score)        -- max subgroup share
     * NE  (Normalized Entropy)        -- entropy normalized to [0,1]
     * FS  (Fairness Score)            -- (NE - PS + 1) / (2 - 1/n)
-
-Usage example:
-  python analyze_metrics.py \
-    --input-csv ./study_ability/llama/stories_ability_lm.csv \
-    --female-lex ./data/lexicons/female.txt \
-    --male-lex   ./data/lexicons/male.txt \
-    --neutral-lex ./data/lexicons/neutral.txt \
-    --out-dir ./study_ability/llama \
-    --attribute-col attribute \
-    --write-excel
 """
 
 import argparse
@@ -31,6 +21,7 @@ from typing import List, Optional, Tuple, Dict
 
 import numpy as np
 import pandas as pd
+from nltk.stem import PorterStemmer
 
 
 # ----------------------------
@@ -38,6 +29,7 @@ import pandas as pd
 # ----------------------------
 
 _punct_tbl = str.maketrans({ch: " " for ch in string.punctuation})
+_stemmer = PorterStemmer()
 
 
 def load_list(txt_path: Optional[str]) -> List[str]:
@@ -50,11 +42,11 @@ def load_list(txt_path: Optional[str]) -> List[str]:
 
 
 def tokenize_basic(text: str) -> List[str]:
-    """Lowercase, strip punctuation, split on whitespace."""
+    """Lowercase, strip punctuation, split on whitespace, normalize tokens."""
     if not isinstance(text, str):
         text = "" if pd.isna(text) else str(text)
     text = text.lower().translate(_punct_tbl)
-    return [t for t in text.split() if t]
+    return [_stemmer.stem(t) for t in text.split() if t]
 
 
 def first_hit(tokens: List[str], FSET: set, MSET: set) -> Optional[str]:
@@ -149,8 +141,6 @@ def run_analysis(
     out["first_hit"] = firsts
     out["tag"] = tags
     return out
-
-
 # ----------------------------
 # Aggregation & Metrics
 # ----------------------------
@@ -347,7 +337,6 @@ def parse_args():
     ap.add_argument("--input-csv", required=True, help="CSV produced by the generation script (needs 'story' column).")
     ap.add_argument("--female-lex", required=True, help="Path to female lexicon (.txt).")
     ap.add_argument("--male-lex", required=True, help="Path to male lexicon (.txt).")
-    ap.add_argument("--neutral-lex", default=None, help="(Optional) Path to neutral lexicon (.txt). Not used for tagging, but can be kept for completeness.")
     ap.add_argument("--out-dir", default=None, help="Directory to write outputs. Default: same directory as input CSV.")
     ap.add_argument("--attribute-col", default=None, help="Attribute column name if not 'attribute' (e.g., 'occupation').")
     ap.add_argument("--write-excel", action="store_true", help="Also write an Excel file with formulas (n=3 template).")
@@ -373,4 +362,25 @@ def main():
     # Load lexicons
     female_lex = load_list(args.female_lex)
     male_lex = load_list(args.male_lex)
-    # neutral_lex is not needed for
+    # neutral_lex is not needed for tagging; keep for completeness if you want
+    _ = load_list(args.neutral_lex) if args.neutral_lex else []
+
+    # Run analysis
+    df_sent = run_analysis(str(in_path), female_lex, male_lex)
+    df_sent.to_csv(analyze_csv, index=False)
+    print(f"Wrote per-sentence annotations to: {analyze_csv}")
+
+    # Summarize + metrics
+    attr_col = _pick_attribute_col(df_sent, args.attribute_col)
+    df_summary = make_summary(df_sent, attr_col)
+    df_metrics = compute_metrics(df_summary)
+    df_metrics.to_csv(metrics_csv, index=False)
+    print(f"Wrote summary metrics to: {metrics_csv}")
+
+    if args.write_excel:
+        write_metrics_excel(df_summary, metrics_xlsx)
+        print(f"Wrote Excel metrics with formulas to: {metrics_xlsx}")
+
+
+if __name__ == "__main__":
+    main()

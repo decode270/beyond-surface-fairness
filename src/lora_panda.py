@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 """
-sft_lora_panda.py
 -----------------
-Supervised fine-tuning (SFT) with LoRA on PANDA-style pairs for bias mitigation.
-
 - Data format supported (per line, JSON):
     {"original": "...", "perturbed": "...", "selected_word": "...", "target_attribute": "..."}
   or
@@ -41,18 +38,17 @@ import argparse
 # -----------------------------
 # Defaults (overridable by CLI)
 # -----------------------------
-DEFAULT_MODEL_ID = os.environ.get("BASE_MODEL_ID", "mistralai/Mistral-7B-Instruct-v0.2")
-DEFAULT_DATA_PATH = os.environ.get("PANDA_TRAIN", "data/panda/train.jsonl")
-DEFAULT_EVAL_PATH = os.environ.get("PANDA_EVAL",  "data/panda/valid.jsonl")
-DEFAULT_OUT_DIR   = os.environ.get("OUTPUT_DIR",  "outputs/mistral7b_lora")
+DEFAULT_MODEL_ID = os.environ.get("BASE_MODEL_ID", "xxx")
+DEFAULT_DATA_PATH = os.environ.get("PANDA_TRAIN", "xxx")
+DEFAULT_EVAL_PATH = os.environ.get("PANDA_EVAL",  "xxx")
+DEFAULT_OUT_DIR   = os.environ.get("OUTPUT_DIR",  "xxx")
 
 MAX_LEN    = 512
-BATCH_SIZE = 1
+BATCH_SIZE = 3
 GRAD_ACCUM = 16
 EPOCHS     = 1
 LR         = 2e-4
 WARMUP     = 0.03
-SEED       = 42
 
 # LoRA configuration (for Mistral-like archs)
 LORA_R         = 8
@@ -307,7 +303,6 @@ def main():
     print(f"[INFO] Run mode:   {args.run_mode}")
     print(f"[INFO] Resume:     {'enabled' if args.enable_resume else 'disabled'}")
 
-    set_seed(SEED)
 
     # Load data
     train_pairs = load_pairs(args.train_jsonl)
@@ -413,7 +408,7 @@ def main():
         processing_class=tok,
     )
 
-    # Train / resume
+    # Train
     if args.enable_resume:
         resume_ckpt = args.resume_dir or latest_checkpoint_dir(str(out_dir))
         if resume_ckpt:

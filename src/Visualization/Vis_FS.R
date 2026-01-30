@@ -22,7 +22,7 @@ merged_df_male   <- merged_df %>% filter(group == "M") %>% arrange(desc(BiasScor
 # orders in left_f, right_m
 ordered_occupations <- unique(c(merged_df_female$occupation, merged_df_male$occupation))
 
-# 加入 factor 顺序
+# factor order
 merged_df <- merged_df %>%
   mutate(occupation = factor(occupation, levels = ordered_occupations))
 
@@ -113,3 +113,4 @@ ggplot() +
     ),
     legend.position = "top"
   )
+

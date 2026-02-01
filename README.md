@@ -34,9 +34,9 @@ Input prompt templates, and generated answers from Mistral 7B and Llama 8B group
 Official outputs and figures for the submission.
 
 - `Graphs/`
-  - `ability/`, `chara/`, `fam/`, `occ/`
+  - `character/`, `family_role/`, `occupation/`, `study_ability`
     - `llama/`, `mistral/`  Visualization, e.g., `Rplot_fs.png`, `Rplot_shr.png` (FS/SHR comparisons across models/axes).
-    - Papers' Figures (under `occ/`):  
+    - Papers' Figures:  
       - `bidirect.png`, `example_detection.png`, `process.png` diagrams illustrations included in the paper figures.
 - `metrics_results/`
   - `stories_*_*_metrics.xlsx` metrics spreadsheets with computed fairness measures (SHR/FS) and built-in Excel formulas.

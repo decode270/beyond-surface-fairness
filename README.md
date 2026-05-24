@@ -28,7 +28,13 @@ Input prompt templates, and generated answers from Mistral 7B and Llama 8B group
   - `llama/`, `mistral/`.
     - May contain intermediate XLSX artifacts organized by base model (`llama`, `mistral`) and debiased variants (`stf, ins, dpo`).  
     - Typical files:
-      - `_*_*_*_analyze.xlsx` analysis spreadsheets with per-story tagging stats (Female/Male/Unknown counts, tags, first-hit, etc.).  
+      - `_*_*_*_analyze.xlsx` analysis spreadsheets with per-story tagging stats (Female/Male/Unknown counts, tags, first-hit, etc.).
+  - `StereoSet_data`:
+    -  `dev.json`, `test.json` orignal downloaded from StereoSet
+  - `Training_data`:
+    -  `Constructed_PANDA_DPO_train`: constructed from PANDA dataset for dpo format, which used for dpo_lora fine-tuning.
+    -  `Huggingface_BiasDPO`: downloaded original data and cited_link shown in paper, which used for dpo_lora fine-tuing with constructed panda_dpo.
+    -  PANDA data were used for SFT lora fine-tuning.
 
 ### `results/`
 Official outputs and figures for the submission.
@@ -41,17 +47,19 @@ Official outputs and figures for the submission.
       - Methodology's process illustrations included.
 - `Metrics_results/`
   - `_*_*_*_metrics.xlsx` metrics spreadsheets with computed measurment (SHR/FS) for the diagnostic framework and built-in Excel formulas.
+- `StereoSet_test`:
+  -  tested results by ss,lms,icat, across debiased variants and baselines in stereoset benchmark.
 
 ### `src/`
 Source code for training, merging, generation, analysis, and plotting.
 
-- `lora_panda.py` : LoRA SFT on PANDA dataset.
-- `merge_adapter_to_llm.py` : merge a trained LoRA adapter into the base model and save a standalone merged model.
 - `generate_story_all.py` : generation of identity-free stories from templates; supports merged or base models.
 - `analyze_metrics.py` metrics pipeline: token tagging + aggregation + SHR/FS computation; can also export Excel with formulas.
+- `evaluation.py` and `stereoset_test.py` were used for ss, lms, icat testing built on stereoSet.
 - `Visualization/`
   - `Vis_FS.R`  plots Fairness Score distributions (FS).
   - `Vis_SHR.R`  plots Stereotype-Hit-Rate comparisons (SHR).
+
 
 ### Root files
 - `environment.yml`  Conda environment spec (Python, PyTorch, Transformers, TRL/PEFT and so on).

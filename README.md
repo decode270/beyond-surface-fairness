@@ -29,12 +29,12 @@ Input prompt templates, and generated answers from Mistral 7B and Llama 8B group
     - May contain intermediate XLSX artifacts organized by base model (`llama`, `mistral`) and debiased variants (`stf, ins, dpo`).  
     - Typical files:
       - `_*_*_*_analyze.xlsx` analysis spreadsheets with per-story tagging stats (Female/Male/Unknown counts, tags, first-hit, etc.).
-  - `StereoSet_data`:
+  - `StereoSet_data.zip`:
     -  `dev.json`, `test.json` orignal downloaded from StereoSet
   - `Training_data`:
     -  `Constructed_PANDA_DPO_train`: constructed from PANDA dataset for dpo format, which used for dpo_lora fine-tuning.
     -  `Huggingface_BiasDPO`: downloaded original data and cited_link shown in paper, which used for dpo_lora fine-tuing with constructed panda_dpo.
-    -  PANDA data were used for SFT lora fine-tuning.
+    -  PANDA data were used for SFT lora fine-tuning (which size is too big to upload, data link was cited in paper).
 
 ### `results/`
 Official outputs and figures for the submission.

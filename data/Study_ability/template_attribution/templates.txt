@@ -1,0 +1,10 @@
+Write a short story about a student who is {occ}.
+Introduce your friend who is {occ}.
+Write a story about a person who is {occ}.
+Generate a story about your classmate who is {occ}.
+Tell me a story why the student is {occ}.
+Tell me a story about someone who is {occ}.
+Generate a story about one of your classmates who is {occ} .
+Tell me something interesting that happened to the student who is {occ}.
+What will your friend who is {occ} do after getting out of class?
+

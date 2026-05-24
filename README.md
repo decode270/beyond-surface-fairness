@@ -21,25 +21,26 @@ This repository provides a reproducible pipeline to study gender implicit bias i
 ### `data/`
 Input prompt templates, and generated answers from Mistral 7B and Llama 8B grouped by 4 axes:
 
-- `character/`, `family_role/`, `occupation/`, `study_ability/`
+- `Character/`, `Family_role/`, `Occupation/`, `Study_ability/`
   - `template_attribution/`
     - `female.txt`, `male.txt` attribute/trait lists per axis.
     - `templates.txt` identity-free prompt templates with `{occ}` placeholders.
-  - `llama/`, `mistral/`, `ft_llama/`, `ft_mistral/`
-    - May contain intermediate XLSX artifacts organized by base model (`llama`, `mistral`) and fine-tuned variants (`ft_*`).  
+  - `llama/`, `mistral/`.
+    - May contain intermediate XLSX artifacts organized by base model (`llama`, `mistral`) and debiased variants (`stf, ins, dpo`).  
     - Typical files:
-      - `stories_*_*_analyze.xlsx` analysis spreadsheets with per-story tagging stats (Female/Male/Unknown counts, tags, first-hit, etc.).  
+      - `_*_*_*_analyze.xlsx` analysis spreadsheets with per-story tagging stats (Female/Male/Unknown counts, tags, first-hit, etc.).  
 
 ### `results/`
 Official outputs and figures for the submission.
 
-- `Graphs/`
-  - `character/`, `family_role/`, `occupation/`, `study_ability`
-    - `llama/`, `mistral/`  Visualization, e.g., `Rplot_fs.png`, `Rplot_shr.png` (FS/SHR comparisons across models/axes).
+- `Visualization/`
+  - `Character/`, `Family_role/`, `Occupation/`, `Study_ability`
+    - `llama/`, `mistral/`
+      - visualization for bidirectional bias by Stereotype-hit Rate [ln(SHR)] and distributional balance by Fairness Score [FS] , e.g., `MODEL_AXIS_VARIANT_FS/SHR.pdf`, (FS/SHR comparisons across models/axes).
     - Papers' Figures:  
-      - `bidirect.png`, `example_detection.png`, `process.png` diagrams illustrations included in the paper figures.
-- `metrics_results/`
-  - `stories_*_*_metrics.xlsx` metrics spreadsheets with computed fairness measures (SHR/FS) and built-in Excel formulas.
+      - Methodology's process illustrations included.
+- `Metrics_results/`
+  - `_*_*_*_metrics.xlsx` metrics spreadsheets with computed measurment (SHR/FS) for the diagnostic framework and built-in Excel formulas.
 
 ### `src/`
 Source code for training, merging, generation, analysis, and plotting.

@@ -2,14 +2,14 @@
 > Anonymous repository for research replication.
 
 ## Overview
-This repository provides a reproducible pipeline to study gender implicit bias in LLMs in 4 axes (Occupation Family_role, study_ability, Character), followed by identity-free generation, metric computation, and visualization.
+This repository provides a reproducible pipeline to study implicit stereotype association in LLMs (Llama3.1 8B, Mistrial 7B) in 4 axes (Occupation Family_role, study_ability, Character), followed by identity-free generation, metric computation, and visualization.
 
 - Create templates for inducing implicit stereotypes and bias in LLMs.
-- Generate stories from prompt templates.
-- Supervised LoRA Fine-tune LLMs on PANDA pairs.
-- Merge adapter into base model for inference
-- Compute bias metrics (FS/SHR)
-- Plot results (FS/SHR) for bidirectional bias.
+- Generate stories from prior-free-prompt templates.
+- Two debiasing methods (SFT-LoRA, DPO-LoRA) based on constructed PANDA pairs and one instructed-based debasing method.
+- Constructed training data from PANDA and BiasDPO dataset.
+- Quantifying metrics (FS/SHR) for implicit stereotype association .
+- Plot results (FS/SHR) for  diagnosing bidirectional bias (stereotype and overcorrection) at the attribute-level.
 
 ---
 
